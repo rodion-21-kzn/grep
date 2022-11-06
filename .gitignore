@@ -1,0 +1,5 @@
+.idea/
+cmake-build-*/
+objs/
+s21_grep
+sff.c
