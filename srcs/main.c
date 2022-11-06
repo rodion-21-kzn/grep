@@ -3,51 +3,6 @@
 //
 
 #include "../includes/grep.h"
-#define ALLOC_BASE 100
-
-char** get_templates_from_files(char **template_files) {
-    int i = 0;
-    int template_max_count = ALLOC_BASE;
-    int template_count = 0;
-    FILE* f;
-    char** templates = (char **) calloc (ALLOC_BASE, sizeof(char *));
-    char* pattern = NULL;
-    size_t len = 1024;
-    while(template_files[i]) {
-        f = fopen(template_files[i], "r");
-        printf("\"%s\" - %p\n", template_files[i], f);
-        if (f == NULL) {
-            exit(1);
-        } else {
-            while (getline(&pattern, &len, f) != EOF) {
-                pattern[strlen(pattern) - 1]  == '\n' ? pattern[strlen(pattern) - 1]  = '\0' : 0; // для того, чтобы в шаблон не попадал символ переноса строки
-                templates[template_count] = pattern;
-                template_count++;
-                if (template_count >= template_max_count) {
-                    template_max_count+= ALLOC_BASE;
-                    templates = realloc(templates, template_max_count*sizeof(char *));
-                }
-            }
-        }
-        i++;
-    }
-    templates[template_count] = NULL;
-    return templates;
-}
-
-char** template_concatenation(char** files_templates, char** arg_templates, int max_arg_count) {
-    int count_files_templates = 0;
-    int count_arg_templates = 0;
-    while(files_templates[count_files_templates]) {
-        count_files_templates++;
-    }
-    while(arg_templates[count_arg_templates]) {
-        count_arg_templates++;
-    }
-    printf("count_files_templates - %d\n",count_files_templates);
-    printf("count_arg_templates - %d",count_arg_templates);
-    return arg_templates;
-}
 
 int main (int argc, char* argv[]) {
     Options opt = {0};

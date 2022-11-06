@@ -7,5 +7,9 @@ link_directories(./includes)
 
 add_executable(untitled1
         srcs/main.c
+        srcs/parser.c
+        srcs/get_templates_from_files.c
+        srcs/template_concatenation.c
+
         includes/grep.h
-        srcs/parser.c)
+        )

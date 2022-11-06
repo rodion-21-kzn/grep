@@ -10,6 +10,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#define ALLOC_BASE 100
+
 typedef struct Options{
     int e;
     int i;
@@ -21,10 +23,10 @@ typedef struct Options{
     int s;
     int f;
     int o;
-}Options;
+}       Options;
 
-void print_opt(Options opt);
 int parser(int argc, char* argv[], Options* opt, char** template_arr, char** template_files, char** files_arr, int* temp_count, int* files_count);
-int opt_f_func(char* file_name, char** buffer, int* temp_count);
+char** get_templates_from_files(char **template_files);
+char** template_concatenation(char** files_templates, char** arg_templates, int max_arg_count);
 
 #endif //UNTITLED1_GREP_H
