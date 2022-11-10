@@ -25,7 +25,7 @@ typedef struct Options{
     int o;
 }       Options;
 
-int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** template_files, char** files_arr, int* temp_count, int* files_count);
+int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** files_arr, int* temp_count, int* files_count);
 char** get_templates_from_files(char *file_name, int* temp_count);
 void template_concatenation(char** files_templates, char** arg_templates, int *temp_count);
 // char** get_templates_from_files(char **template_files);

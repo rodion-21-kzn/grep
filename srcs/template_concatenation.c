@@ -18,7 +18,6 @@ void template_concatenation(char** files_templates, char** arg_templates, int *t
     for (int i = 0; i < count_files_templates; i++) {
         arg_templates[count_arg_templates+i] =  files_templates[i];
     }
-    printf("count_arg_templates - %d\n", *temp_count);
 }
 
 /*

@@ -11,11 +11,10 @@ char *pattern_allocate(char *pattern)
     return str;
 }
 
-int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** template_files, char** files_arr, int* temp_count, int* files_count)
+int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** files_arr, int* temp_count, int* files_count)
 {
     int error = 1;
     int iteration = 1;
-    int template_files_count = 0;
     int memory = argc - 1;
     char** templates_from_file;
     int e_situation = 0; // переменная нужна для случаев -е [template], чтобы следующий argv воспринимался полностью как шаблон и не проходил парсинг

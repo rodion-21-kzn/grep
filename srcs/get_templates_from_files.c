@@ -38,6 +38,7 @@ char** get_templates_from_files(char *file_name, int *temp_count) {
             templates = realloc(templates, template_max_count * sizeof(char *));
         }
     }
+    free(pattern);
     fclose(f);
     templates[template_count] = NULL;
     return templates;
