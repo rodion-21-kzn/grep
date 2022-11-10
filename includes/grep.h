@@ -9,7 +9,7 @@
 #include <regex.h>
 #include <string.h>
 #include <stdlib.h>
-
+#include <regex.h>
 #define ALLOC_BASE 100
 
 typedef struct Options{
@@ -28,6 +28,7 @@ typedef struct Options{
 int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** files_arr, int* temp_count, int* files_count);
 char** get_templates_from_files(char *file_name, int* temp_count);
 void template_concatenation(char** files_templates, char** arg_templates, int *temp_count);
+int output(int temp_count, int files_count, char** template_arr, char** files_arr, Options opt);
 // char** get_templates_from_files(char **template_files);
 //char** template_concatenation(char** files_templates, char** arg_templates, int max_arg_count);
 

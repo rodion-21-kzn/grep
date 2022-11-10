@@ -8,7 +8,7 @@ FLDR_O  =   objs/
 FLDR_I  =   includes/
 
 SRCS    =   main.c		parser.c	template_concatenation.c \
-			get_templates_from_files.c
+			get_templates_from_files.c		output.c
 
 OBJS    =   ${SRCS:.c=.o}
 

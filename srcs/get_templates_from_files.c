@@ -36,6 +36,9 @@ char** get_templates_from_files(char *file_name, int *temp_count) {
         if (template_count >= template_max_count) {
             template_max_count += ALLOC_BASE;
             templates = realloc(templates, template_max_count * sizeof(char *));
+            if (templates == NULL) {
+                exit(1);
+            }
         }
     }
     free(pattern);

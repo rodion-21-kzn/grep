@@ -42,6 +42,9 @@ int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** fi
                     if (memory < *temp_count)  {
                         memory *= 3;
                         *template_arr = realloc(*template_arr, memory * sizeof(char*));
+                        if (*template_arr == NULL) {
+                            exit(1);
+                        }
                     }
                     template_concatenation(templates_from_file, *template_arr, temp_count);
                     free(templates_from_file);
@@ -85,6 +88,9 @@ int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** fi
                             if (memory < *temp_count)  {
                                 memory *= 2;
                                 *template_arr = realloc(*template_arr, memory * sizeof(char*));
+                                if (*template_arr == NULL) {
+                                    exit(1);
+                                }
                             }
                             template_concatenation(templates_from_file, *template_arr, temp_count);
                             free(templates_from_file);
