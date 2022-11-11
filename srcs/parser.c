@@ -7,6 +7,9 @@
 char *pattern_allocate(char *pattern)
 {
     char *str = calloc(strlen(pattern) + 1, sizeof(char));
+    if (str == NULL) {
+        exit(1);
+    }
     strcpy(str, pattern);
     return str;
 }
@@ -24,8 +27,6 @@ int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** fi
         f_situation = 0;
         if (argv[iteration][0] == '-') {
             for (int i = 1; i < (int) strlen(argv[iteration]); i++) {
-                int j = 0;
-                int f = 0;
                 if (argv[iteration][i] == 'e' && i != (int) strlen(argv[iteration]) - 1) {
                     // отработка ситуации -е[template]
                     (*template_arr)[*temp_count] = pattern_allocate(argv[iteration] + i + 1);
@@ -38,15 +39,14 @@ int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** fi
                 if (argv[iteration][i] == 'f' && i != (int) strlen(argv[iteration]) - 1) {
                     // отработка ситуации -f[file name]
                     templates_from_file = get_templates_from_files(argv[iteration] + i + 1, temp_count);
-
                     if (memory < *temp_count)  {
-                        memory *= 3;
+                        memory *= *temp_count;
                         *template_arr = realloc(*template_arr, memory * sizeof(char*));
                         if (*template_arr == NULL) {
                             exit(1);
                         }
                     }
-                    template_concatenation(templates_from_file, *template_arr, temp_count);
+                    template_concatenation(templates_from_file, *template_arr);
                     free(templates_from_file);
                     opt->f = 1;
                     break;
@@ -55,6 +55,8 @@ int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** fi
                     case 'e':
                         opt->e = 1;
                         if (i == (int) strlen(argv[iteration]) - 1) { // отработка ситуации -е [template]
+                            if (argv[iteration+1] == NULL)
+                                exit(1);
                             (*template_arr)[*temp_count] = pattern_allocate(argv[iteration+1]);
                             *temp_count = *temp_count + 1;
                             e_situation = 1;
@@ -92,7 +94,7 @@ int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** fi
                                     exit(1);
                                 }
                             }
-                            template_concatenation(templates_from_file, *template_arr, temp_count);
+                            template_concatenation(templates_from_file, *template_arr);
                             free(templates_from_file);
                             f_situation = 1;
                         }
@@ -112,6 +114,7 @@ int parser(int argc, char* argv[], Options* opt, char*** template_arr, char** fi
             iteration++;
         }
     }
+    opt->v == 1 ? opt->o = 0 : 0;
     return error;
 }
 

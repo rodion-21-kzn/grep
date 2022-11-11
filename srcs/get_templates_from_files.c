@@ -6,7 +6,6 @@
 #include "../includes/grep.h"
 
 char** get_templates_from_files(char *file_name, int *temp_count) {
-    int i = 0;
     int template_max_count = ALLOC_BASE;
     int template_count = 0;
     char *pattern_alloc = NULL;
@@ -19,14 +18,12 @@ char** get_templates_from_files(char *file_name, int *temp_count) {
         exit(1);
     }
     while (getline(&pattern, &len, f) != EOF) {
-        if (pattern[0] == '\n') {
-            continue;
+        if (pattern[strlen(pattern) - 1] == '\n' && strlen(pattern) != 1) {
+            pattern[strlen(pattern) - 1] = '\0';
         }
-        pattern[strlen(pattern) - 1] == '\n' ? pattern[strlen(pattern) - 1] = '\0'
-                                             : 0; // для того, чтобы в шаблон не попадал символ переноса строки
+        // pattern[strlen(pattern) - 1] == '\n' ? pattern[strlen(pattern) - 1] = '\0' : 0; // для того, чтобы в шаблон не попадал символ переноса строки
         pattern_alloc = calloc(strlen(pattern) + 1, sizeof(char));
         if (pattern_alloc == NULL) {
-            printf("error", stderr); // марат (я) не рекомендует
             exit(1);
         }
         strcpy(pattern_alloc, pattern);

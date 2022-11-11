@@ -9,7 +9,6 @@ void print_opt(Options opt);
 int main(int argc, char *argv[]) {
     Options opt = {0};
     char** template_arr = (char **) calloc(argc - 1, sizeof(char*));
-    int true = 0;
     char** files_arr = (char **) calloc(argc - 1, sizeof(char*));
     if (template_arr == NULL || files_arr == NULL) {
         exit(1);
@@ -17,9 +16,21 @@ int main(int argc, char *argv[]) {
     int temp_count = 0;
     int files_count = 0;
     if (parser(argc, argv, &opt, &template_arr, files_arr, &temp_count, &files_count)) {
+        if (files_count <= 1 && temp_count == 0) {
+            exit(1);
+        }
+        if (opt.e == 0 && opt.f == 0 && temp_count == 0) {
+            template_arr[0] = files_arr[0];
+            files_count -= 1;
+            temp_count++;
+            for (int i = 0; i < files_count; i++) {
+                files_arr[i] = files_arr[i + 1];
+            }
+            files_arr[files_count] = NULL;
+        }
         output(temp_count, files_count, template_arr, files_arr, opt);
 
-                /* printf("templates %d\n", temp_count);
+               /* printf("templates %d\n", temp_count);
                 for (int i = 0; i < temp_count; i ++) {
                     printf("    '%s'\n", template_arr[i]);
                 }
@@ -30,11 +41,12 @@ int main(int argc, char *argv[]) {
     } else {
         printf("ERROR");
     }
-    for (int i = 0; i < temp_count; i ++) {
+    for (int i = 0; i < temp_count && temp_count > 1; i ++) {
         free(template_arr[i]);
     }
     free(template_arr);
     free(files_arr);
+    return 0;
 }
 
 
